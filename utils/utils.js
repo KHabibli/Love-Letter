@@ -4,11 +4,8 @@ const randomNumber = size => Math.floor(Math.random() * size)
 const shuffleCards = deck => {
     var size = deck.length, temp, index;
 
-    // While there are elements in the array
-    for(let i = size - 1; i >= 0; i--) {
-        // Pick a random index
+    for (let i = size - 1; i >= 0; i--) {
         index = randomNumber(i);
-        // And swap the last element with it
         temp = deck[i];
         deck[i] = deck[index];
         deck[index] = temp;
@@ -16,22 +13,16 @@ const shuffleCards = deck => {
     return deck;
 }
 
-const findCardIndex    = (cards, cardName) => cards.findIndex(currentCard => currentCard.card === cardName)
-
-const findCard         = (cards, cardName) => cards.find(card => card.card === cardName)
-
-const findPlayerIndex  = (nickname, players) => players.findIndex(player => player.nickname === nickname)
-
-const findPlayerByID   = (lobby, id) => lobby.players.find(player => player.id === id)
-
+const findCardIndex = (cards, cardName) => cards.findIndex(currentCard => currentCard.card === cardName)
+const findCard = (cards, cardName) => cards.find(card => card.card === cardName)
+const findPlayerIndex = (nickname, players) => players.findIndex(player => player.nickname === nickname)
+const findPlayerByID = (lobby, id) => lobby.players.find(player => player.id === id)
 const findPlayerByName = (lobby, nickname) => lobby.players.find(player => player.nickname === nickname)
-
-const findLobby        = (rooms, room) => rooms.find(roomValue => roomValue.room == room)
-
-const findOwner        = players => players.find(player => player.isOwner == true)
+const findLobby = (rooms, room) => rooms.find(roomValue => roomValue.room == room)
+const findOwner = players => players.find(player => player.isOwner == true)
 
 const findCredentials = (rooms, room, id) => {
-    let lobby  = findLobby(rooms, room)
+    let lobby = findLobby(rooms, room)
     let player = findPlayerByID(lobby, id)
     let playerIndex = findPlayerIndex(player.nickname, lobby.players)
     return {
@@ -49,7 +40,7 @@ const discardCard = (player, card) => {
 }
 
 const checkDiscard = card => {
-    if(card.card === "Princess"){
+    if (card.card === "Princess") {
         return true
     }
     return false
@@ -60,10 +51,10 @@ const nextPlayer = (lobby, currentPlayer) => {
     let size = lobby.players.length - 1
     let currentIndex = findPlayerIndex(currentPlayer.nickname, lobby.players)
     let index = currentIndex + 1
-    if(index == lobby.players.length){
+    if (index == lobby.players.length) {
         index = 0
     }
-    if(lobby.numberOfPlayersInRound == 1){
+    if (lobby.numberOfPlayersInRound == 1) {
         let remainingPlayer = lobby.players.find(player => player.isOutOfRound == false)
         let remainingPlayerIndex = findPlayerIndex(remainingPlayer.nickname, lobby.players)
         return {
@@ -72,10 +63,10 @@ const nextPlayer = (lobby, currentPlayer) => {
             result: "Round over"
         }
     }
-    while(size > 0){
-        if(lobby.players[index].isOutOfRound == false){
-            if(lobby.cards.gameCards.length == 0){
-                let {lobby: nextLobby, winner} = roundWinner(lobby)
+    while (size > 0) {
+        if (lobby.players[index].isOutOfRound == false) {
+            if (lobby.cards.gameCards.length == 0) {
+                let { lobby: nextLobby, winner } = roundWinner(lobby)
                 return {
                     nextLobby,
                     nextIndex: findPlayerIndex(winner.nickname, nextLobby.players),
@@ -94,7 +85,7 @@ const nextPlayer = (lobby, currentPlayer) => {
         } else {
             size--
             index++
-            if(index == lobby.players.length){
+            if (index == lobby.players.length) {
                 index = 0
             }
         }
@@ -119,25 +110,25 @@ const roundWinner = lobby => {
 
 
 const checkCondition = (lobby, nextIndex, result, event) => {
-    if(result == "Round is on"){
+    if (result == "Round is on") {
         lobby.players[nextIndex].hisTurn = true
         return {
             winner: "",
             lobbyCondition: lobby,
             event: `${event}Ready`
         }
-    } else{
+    } else {
         let previousOwner = findOwner(lobby.players)
         let previousOwnerIndex = findPlayerIndex(previousOwner.nickname, lobby.players)
         lobby.players[previousOwnerIndex].isOwner = false
         lobby.players[nextIndex].roundsWon = lobby.players[nextIndex].roundsWon + 1
         lobby.players[nextIndex].isOwner = true
         lobby.players.forEach(player => {
-            if(player.isOutOfRound == false){
+            if (player.isOutOfRound == false) {
                 player = discardCard(player, player.cardsOnHand[0])
             }
         })
-        if(lobby.players[nextIndex].roundsWon == lobby.goal){
+        if (lobby.players[nextIndex].roundsWon == lobby.goal) {
             return {
                 winner: lobby.players[nextIndex],
                 lobbyCondition: lobby,
