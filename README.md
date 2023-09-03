@@ -1,9 +1,3 @@
-# ufaz-love-letter
-Love Letter Board Game:
+# Love Letter Card Game
 
-To run unit tests
-# npm test
-To run the app locally:
-# npm run dev
-
-Report : https://docs.google.com/document/d/1b30N-kb3MKFXKrV_BOAkA3zGfb3HWRaJw0PixtUqy4E/edit#
+**Note:** This repository is no longer actively maintained. It serves as a historical reference and may contain outdated code and dependencies. The last commit has been made 3 years ago. Please consider this before using or forking the project.
