@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/createJoin.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Create</h1>
+        <form action="lobby.html">
+            <label for="nickname">Pick a nickname</label>
+            <input type="text" id="nickname" name="nickname" placeholder="Nickname" required>
+            <label for="lobbyname">Lobby name</label>
+            <input type="text" id="lobbyname" name="room" placeholder="Lobby Name" required>
+            <label for="number">Lobby Password</label>
+            <input type="number" id="number" placeholder="Number of players" name="number"  min="2" max="4" required>
+            <hr />
+            <button id="createLobby">Play</button>
+        </form>
+    </div>
+</body>
+</html>
